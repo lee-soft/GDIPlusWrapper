@@ -39,9 +39,29 @@ Private Sub Class_Initialize()
     '
 End Sub
 
+'--------------------------------------------------------------------------------
+' Procedure  :       Constructor
+' Description:       Initializes a GDI+Font with 1 simple call with a font family
+'                    ** Adhears to MSDN **
+'
+' Parameters :       r_FontFamily (GDIPFontFamily)
+'                    r_Size (Single)
+'                    fontStyle (fontStyle = FontStyleItalic)
+Public Sub Constructor(ByRef r_FontFamily As GDIPFontFamily, _
+                       ByVal r_Size As Single, _
+                       Optional ByVal fontStyle As fontStyle = FontStyleItalic)
+                       
+    Dispose
+
+    Set m_fontFamily = r_FontFamily
+    SetStatus GdipCreateFont(m_fontFamily.Value, m_Size, fontStyle, UnitPixel, m_ptrFont)
+End Sub
+
 
 '--------------------------------------------------------------------------------
-' Procedure  :       Constructor2
+' Procedure  :       Constructor2 - Kept for compatability reasons, discontinue
+'                    use in favor of the official constructor
+
 ' Description:       Initializes this object based on a FontFamily object,
 '                    a size, a font style, and a unit of measurement
 ' Parameters :       theFontFamily (Long)
@@ -49,7 +69,7 @@ End Sub
 '                    fontStyle (fontStyle = FontStyleItalic)
 '                    unit (GpUnit = UnitPixel)
 '--------------------------------------------------------------------------------
-Public Sub Constructor2(ByRef theFontFamily As Long, _
+Public Sub Depreciated_Constructor2(ByRef theFontFamily As Long, _
                         ByVal r_Size As Single, _
                         Optional ByVal fontStyle As fontStyle = FontStyleItalic, _
                         Optional ByVal unit As GpUnit = UnitPixel)
@@ -60,7 +80,9 @@ End Sub
 
 
 '--------------------------------------------------------------------------------
-' Procedure  :       Constructor
+' Procedure  :       Constructor - Kept for compatability reasons, discontinue
+'                    use in favor of the official constructor
+
 ' Description:       Initializes a GDI+Font with 1 simple call with a font name
 '                    IE: Constructor "Tahoma", 14. Saves creating a fontfamily
 '                    TODO: Discontinue this method in favour of Constructor2
@@ -69,7 +91,7 @@ End Sub
 '                    r_Size (Single)
 '                    fontStyle (fontStyle = FontStyleItalic)
 '--------------------------------------------------------------------------------
-Public Sub Constructor(ByRef r_FontName As String, _
+Public Sub Depreciated_Constructor(ByRef r_FontName As String, _
                        ByRef r_Size As Single, _
                        Optional ByVal fontStyle As fontStyle = FontStyleItalic)
     Dispose
