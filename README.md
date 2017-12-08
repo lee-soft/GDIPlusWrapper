@@ -2,7 +2,7 @@
 
 This library is a continuation of the vbAccelerator GDIPlusWrapper library for the flat GDI API. My goal was to create a more complete GDI+ interface for my own projects. It seems the author was inspired by Microsoft's GDI+ library and to the best of my ability I've tried to continue implementation in this style where possible. 
 
-Since the official vbAccelerator code is no longer available from their website I have included a virgin package of it for convenience in this repository. It is unmolested and contains the original files intact as they were from the official vbAccelerator website. Out of respect for the original author it is not packaged with my code.
+Since the official vbAccelerator code is no longer available from their website I have included a link to the virgin package for convenience in this repository. It is unmolested and contains the original files intact as they were from the official vbAccelerator website. Out of respect for the original author it is not packaged with my code.
 
 ## Background 
 
