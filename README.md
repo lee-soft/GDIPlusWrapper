@@ -23,3 +23,7 @@ Since the library was built on top of another library (vbAccelerator's GDIPlusWr
 ## How to apply patches
 
 - The .patch files are "diff files". You should apply them the same way you would any diff file. Gnu have a free patch utility for Windows
+
+## Acknolwedgements
+
+I have been unable to contact the original author of the vbAccelerator GDIPlusWrapper (steve@vbaccelerator.com). Permission to include his library here is pending and until it is approved I will not be able to include it here.
