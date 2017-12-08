@@ -10,7 +10,7 @@ Initially I created my software using the flat GDI API without any libraries and
 
 ## Virgin GDIPlusWrapper
 
-Since the library was built on top of another library (vbAccelerator's GDIPlusWrapper) you will need get the original library first. You can find it a copy of it here [vbAccelerator - GDIPlusWrapper] (https://github.com/tannerhelland/vbAccelerator-Archive/blob/master/VB/Code/vbMedia/Using_GDI_Plus/GDIPlus_Helper/GDIPlus_Wrapper.zip)
+Since the library was built on top of another library (vbAccelerator's GDIPlusWrapper) you will need get the original library first. You can find it a copy of it here [vbAccelerator - GDIPlusWrapper](https://github.com/tannerhelland/vbAccelerator-Archive/blob/master/VB/Code/vbMedia/Using_GDI_Plus/GDIPlus_Helper/GDIPlus_Wrapper.zip)
 
 ## Getting Started (To compile)
 
