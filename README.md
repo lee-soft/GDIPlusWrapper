@@ -8,6 +8,10 @@ Since the official vbAccelerator code is no longer available from their website 
 
 Initially I created my software using the flat GDI API without any libraries and it was quite the monolithic nightmare. After I discovered the effecient GDIPlusWrapper by vbAccelerator I began ammending their library to add the functionality that I required in the fashion of Microsoft's implementation of GDI+ in the products they havn't completely neglected yet. 
 
+## Virgin GDIPlusWrapper
+
+Since the library was built on top of another library (vbAccelerator's GDIPlusWrapper) you will need get the original library first. You can find it a copy of it here [vbAccelerator - GDIPlusWrapper] (https://github.com/tannerhelland/vbAccelerator-Archive/blob/master/VB/Code/vbMedia/Using_GDI_Plus/GDIPlus_Helper/GDIPlus_Wrapper.zip)
+
 ## Getting Started (To compile)
 
 - Ensure you have Visual Basic 6.0(Service Pack 6) installed
