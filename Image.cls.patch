@@ -1,0 +1,177 @@
+51a54,111
+> '--------------------------------------------------------------------------------
+> ' Procedure  :       FromBinary
+> ' Description:       FromBinary method creates a new Image object based on
+> '                    binary data
+> ' Parameters :       pngData() (Byte)
+> '--------------------------------------------------------------------------------
+> Public Sub FromBinary(ByRef pngData() As Byte)
+> 
+>     Dim oStream As IUnknown
+> 
+>     Dim nBytes  As Long
+> 
+>     Dim hMem    As Long
+> 
+>     Dim lpMem   As Long
+> 
+>     nBytes = UBound(pngData) - LBound(pngData) + 1
+>     ' Create and lock a memory buffer for image bytes.
+>     hMem = GlobalAlloc(GMEM_MOVEABLE, nBytes)
+> 
+>     If hMem Then
+>         lpMem = GlobalLock(hMem)
+> 
+>         If lpMem Then
+>             ' Copy image bytes to memory buffer, and unlock.
+>             Call CopyMemory(ByVal lpMem, pngData(LBound(pngData)), nBytes)
+>             Call GlobalUnlock(hMem)
+> 
+>             ' Create an IStream object in global memory buffer.
+>             If (CreateStreamOnHGlobal(hMem, False, oStream) = S_OK) Then
+>                 
+>                 SetStatus GdipLoadImageFromStream(ObjPtr(oStream), m_img)
+>             End If
+>         End If
+> 
+>         ' Release global memory object.
+>         Call GlobalFree(hMem)
+>     End If
+> 
+> End Sub
+> 
+> 
+> '--------------------------------------------------------------------------------
+> ' Procedure  :       FromResource
+> ' Description:       FromResource method creates a Image object from the
+> '                    final binary's resource
+> ' Parameters :       resourceID (String)
+> '                    resourceType (String)
+> '--------------------------------------------------------------------------------
+> Public Sub FromResource(ByVal resourceID As String, ByVal resourceType As String)
+> 
+>     Dim pngData() As Byte
+> 
+>     pngData = LoadResData(resourceID, resourceType)
+>     FromBinary pngData
+> 
+> End Sub
+> 
+66,84d125
+< Public Sub FromStream(stream As MemoryStream)
+<    
+<    Dim istr As VBStrm.IStream
+<    Set istr = stream.IStreamOf
+<    
+<    Dispose
+<    If (m_bUseEmbeddedColorManagement) Then
+<       SetStatus GdipLoadImageFromStreamICM( _
+<             ByVal ObjPtr(istr), _
+<             m_img _
+<         )
+<    Else
+<       SetStatus GdipLoadImageFromStream( _
+<             ByVal ObjPtr(istr), _
+<             m_img _
+<         )
+<    End If
+< 
+< End Sub
+137d192
+< End Function
+139,216c194
+< Public Function Save( _
+<     ByVal fileName As String, _
+<     clsidEncoder As CLSID _
+<     )
+< Dim cEncoderParameters As GDIPEncoderParameterList
+< Dim lSize As Long
+< Dim lPtrBuff As Long
+< Dim b() As Byte
+< Dim cEncoderParam As GDIPEncoderParameter
+< Dim pP As EncoderParameter
+< Dim p As EncoderParameters
+< Dim lStart As Long
+< Dim i As Long
+< Dim j As Long
+< Dim l() As Long
+< Dim s() As Integer
+< Dim lCount As Long
+< Dim lPtr() As Long
+< Dim lBufCount As Long
+< Dim status As GpStatus
+< 
+<    Set cEncoderParameters = EncoderParameterList(clsidEncoder)
+<    lSize = cEncoderParameters.fGetEncoderParameterBufSize()
+<    If (lSize > 0) Then
+<    
+<       ' Now prepare the parameters:
+<       ReDim b(0 To lSize - 1) As Byte
+<       lStart = 4
+<       
+<       For i = 1 To cEncoderParameters.count
+<          Set cEncoderParam = cEncoderParameters.Parameter(i)
+<          If (cEncoderParam.ValueCount > 0) Then
+<             Debug.Print "Writing parameter", cEncoderParam.Name, cEncoderParam.value(1)
+<             lCount = lCount + 1
+<          
+<             LSet pP.Guid = cEncoderParam.Guid
+<             pP.NumberOfValues = cEncoderParam.ValueCount
+<             pP.Type = cEncoderParam.ParamType
+<             If (pP.Type = EncoderParameterValueTypeLongRange) Then
+<                pP.Type = EncoderParameterValueTypeLong
+<             End If
+<          
+<             lBufCount = lBufCount + 1
+<             ReDim Preserve lPtr(1 To lBufCount) As Long
+<             lPtr(lBufCount) = GdipAlloc(pP.NumberOfValues * 4)
+<             
+<             Select Case pP.Type
+<             Case EncoderParameterValueTypeLong, EncoderParameterValueTypeLongRange
+<                ReDim l(0 To pP.NumberOfValues - 1) As Long
+<                For j = 1 To pP.NumberOfValues
+<                   l(j - 1) = cEncoderParam.value(j)
+<                Next j
+<                RtlMoveMemory ByVal lPtr(lBufCount), l(0), pP.NumberOfValues * 4
+<                
+<             Case EncoderParameterValueTypeShort
+<                ReDim s(0 To pP.NumberOfValues - 1) As Integer
+<                For j = 1 To pP.NumberOfValues
+<                   s(j - 1) = cEncoderParam.value(j)
+<                Next j
+<                RtlMoveMemory ByVal lPtr(lBufCount), s(0), pP.NumberOfValues * 2
+<                
+<             End Select
+<             pP.ValuePtr = lPtr(lBufCount)
+<          
+<             RtlMoveMemory b(lStart), pP, Len(pP)
+<             lStart = lStart + Len(pP)
+<             
+<          End If
+<       Next i
+<       
+<       ' Write out the number of parameters:
+<       RtlMoveMemory b(0), lCount, 4
+< 
+<       lPtrBuff = VarPtr(b(0))
+<       status = LocalGdipSaveImageToFile(m_img, _
+<             StrPtr(fileName), _
+<             clsidEncoder, _
+<             lPtrBuff)
+---
+> End Function
+218,220c196,197
+<       For i = 1 To lBufCount
+<          GdipFree lPtr(i)
+<       Next i
+---
+> Public Function Save(ByVal filename As String, clsidEncoder As CLSID)
+>     SetStatus LocalGdipSaveImageToFile(m_img, StrPtr(filename), clsidEncoder, ByVal 0&)
+222,228d198
+<       SetStatus status
+<    Else
+<       SetStatus LocalGdipSaveImageToFile(m_img, _
+<             StrPtr(fileName), _
+<             clsidEncoder, _
+<             ByVal 0&)
+<    End If

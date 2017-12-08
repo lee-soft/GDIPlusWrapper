@@ -1,0 +1,33 @@
+48a48,79
+> 
+> '--------------------------------------------------------------------------------
+> ' Procedure  :       UnlockBits
+> ' Description:       Unlocks this Bitmap from system memory.
+> ' Parameters :       LockedBitmapData (BitmapData)
+> '--------------------------------------------------------------------------------
+> Public Function UnlockBits(LockedBitmapData As BitmapData)
+>     SetStatus GdipBitmapUnlockBits(m_img.nativeImage, LockedBitmapData)
+> End Function
+> 
+> 
+> '--------------------------------------------------------------------------------
+> ' Procedure  :       LockBits
+> ' Description:       LockBits method locks a rectangular portion of this bitmap
+> '                    and provides a temporary buffer that you can use to read
+> '                    or write pixel data in a specified format. Any pixel data
+> '                    that you write to the buffer is copied to the Bitmap
+> '                    object when you call UnlockBits
+> ' Parameters :       theRect (gdiplus.RECTL)
+> '                    theFlags (ImageLockMode)
+> '                    thePixelFormat (PixelFormat)
+> '--------------------------------------------------------------------------------
+> Public Function LockBits(theRect As gdiplus.RECTL, _
+>                          theFlags As ImageLockMode, _
+>                          thePixelFormat As PixelFormat) As BitmapData
+> 
+>     Dim bmpData As BitmapData
+> 
+>     SetStatus GdipBitmapLockBits(m_img.nativeImage, theRect, theFlags, thePixelFormat, bmpData)
+>     LockBits = bmpData
+> End Function
+> 
