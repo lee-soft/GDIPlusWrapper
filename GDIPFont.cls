@@ -51,9 +51,9 @@ Public Sub Constructor(ByRef r_FontFamily As GDIPFontFamily, _
                        ByVal r_Size As Single, _
                        Optional ByVal fontStyle As fontStyle = FontStyleItalic)
                        
-    Dispose
-
     Set m_fontFamily = r_FontFamily
+    m_Size = r_Size
+    
     SetStatus GdipCreateFont(m_fontFamily.Value, m_Size, fontStyle, UnitPixel, m_ptrFont)
 End Sub
 
@@ -126,8 +126,6 @@ Public Property Get Value()
 End Property
 
 Public Sub Dispose()
-    m_fontFamily.Dispose
-
     If Not (m_ptrFont = 0) Then
         GdipDeleteFont m_ptrFont
         m_ptrFont = 0
