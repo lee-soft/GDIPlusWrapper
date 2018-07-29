@@ -1,4 +1,4 @@
-48a48,79
+48a49,80
 > 
 > '--------------------------------------------------------------------------------
 > ' Procedure  :       UnlockBits
@@ -31,3 +31,7 @@
 >     LockBits = bmpData
 > End Function
 > 
+106c138
+<    SetStatus GdipCreateBitmapFromHBITMAP(bm, hPal, bm)
+---
+>    SetStatus GdipCreateBitmapFromHBITMAP(hBmp, hPal, bm)
