@@ -1,0 +1,6 @@
+42,43c42,43
+< Public Function GDIPlusCreate(Optional suppressErrors As Boolean = False) As Boolean
+<    GDIPlusCreate = mGDIPlus.GDIPlusCreate(suppressErrors)
+---
+> Public Function GDIPlusCreate() As Boolean
+>    GDIPlusCreate = mGDIPlus.GDIPlusCreate
