@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Declare files that will always have CRLF line endings on checkout.
+*.vbp text eol=crlf
+*.frm text eol=crlf
+*.cls text eol=crlf
+*.bas text eol=crlf
+*.dsr text eol=crlf
+*.ini text eol=crlf
